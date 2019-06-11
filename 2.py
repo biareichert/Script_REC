@@ -15,8 +15,8 @@ class SingleSwitchTopo( Topo ):
 	    # Each host gets 50%/n of system CPU
 	    host = self.addHost( 'h%s' % (h + 1),
 		                 cpu=.5/n )
-	    # 10 Mbps, 5ms delay, 2% loss, 1000 packet queue
-	    self.addLink( host, switch, bw=10, delay='5ms', loss=2,
+	    # 10 Mbps, 5ms delay, 0%loss, 1000 packet queue
+	    self.addLink( host, switch, bw=10, delay='5ms', loss=0,
                           max_queue_size=1000, use_htb=True )
 
 def perfTest():
@@ -27,8 +27,8 @@ def perfTest():
     net.start()
     print "Dumping host connections"
     dumpNodeConnections( net.hosts )
-    print "Testing network connectivity"
-    net.pingAll()
+    #print "Testing network connectivity"
+    #net.pingAll()
     print "Testing bandwidth between h1 and h4"
     h1, h4 = net.get( 'h1', 'h4' )
     net.iperf( (h1, h4) )
